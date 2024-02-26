@@ -81,17 +81,17 @@ void mainMenu(){
 
 // Define the test function 
 double testFunction(double x){
-    return x-cos(x);
+    return x - cos(x);
 }
 
 // Implement the false position method
-void falsePosition(double x1, double x2, int maxIterations){
-    double x3, f1, f2, f3;
+void falsePosition(double a, double b, int maxIterations){
+    double p, f1, f2, f3;
     int i = 0;
 
-    // Calculate function values at the endpoints
-    f1 = testFunction(x1);
-    f2 = testFunction(x2);
+    // Calculate function values at the interval
+    f1 = testFunction(a); // f(a)
+    f2 = testFunction(b); // f(b)
 
     // Perform iterations of the false position method
     while (i < maxIterations){
@@ -100,24 +100,28 @@ void falsePosition(double x1, double x2, int maxIterations){
             return;
         } else {
             // Calculate new approximation
-            x3 = x1 - (f1 * (x2 - x1)) / (f2 - f1);
+            // Equation to find next approximation
+            // p2 = a1 - ((f(a)*(b-a))/(f(b)-f(a)))
+            p = a - ((f1 * (b - a)) / (f2 - f1));
 
-            cout << "\nIteration: " << i << " Approx: " << x3;
+            cout << "\nIteration: " << i << " Approx: " << p;
             
             // Calculate function value at the new approximation
-            f3 = testFunction(x3);
+            f3 = testFunction(p);
             i++;
 
             // Update interval based on the sign of the function value
             if ((f1 * f3) < 0){
-                x2 = x3;
+                b = p;
+                f2 = f3; // Update f(b) to f(p)
             } else {
-                x1 = x3;
+                a = p;
+                f1 = f3; // Update f(a) to f(p)
             }
-            cout << "\nNew interval is [" << x2 << "," << x1 << "]\n";
+            cout << "\nNew interval is [" << b << ", " << a << "]\n";
         }
     }
     // Output the result after reaching the maximum number of iterations
     cout << "\nNumber of iterations: " << i;
-    cout << "\nThe root of the equation is: " << x3;
+    cout << "\nThe root of the equation is: " << p;
 }
