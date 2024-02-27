@@ -7,6 +7,7 @@ using namespace std;
 // function prototypes
 void mainMenu();
 double testFunction(double x);
+double absoluteDifference(double x);
 void falsePosition(double leftInterval, double rightInterval, int iterationNum);
 void bisection(double leftInterval, double rightInterval, int iterationNum);
 void secant(double leftInterval, double rightInterval, int iterationNum);
@@ -118,11 +119,14 @@ double testFunction(double x)
     return x - cos(x);
 }
 
+double absoluteDifference(double x){
+    return abs(0.73908513321516-x);
+}
 // Implement the Bisection method
 void bisection(double a, double b, int maxIterations)
 {
     int counter = 0;
-    double mid, p, f1, f2, f3;
+    double mid, p, f1, f2, f3, diff;
 
     //calculate function values at the interval
     f1 = testFunction(a); //f(a)
@@ -162,16 +166,18 @@ void bisection(double a, double b, int maxIterations)
             cout << "\nNew Interval is [" << a << "," << b << "]\n";
         }
     } 
+    diff = absoluteDifference(p);
     //output results upon reaching max iterations
     cout << "\nNumber of iterations: " << counter;
     cout << "\nThe root of the equation is: " << p;
+    cout << "\nThe absolute difference from the solution: "<<diff;
 }
 
 // Implement the secant method
 void secant(double p0, double p1, int maxIterations)
 {
     int counter = 0;
-    double p2, f1, f0, f2;
+    double p2, f1, f0, f2, diff;
 
     //getting the function values of p0 and p1
     f1 = testFunction(p1);
@@ -204,14 +210,16 @@ void secant(double p0, double p1, int maxIterations)
     }
 
     //output the results after reaching the maximum number of iterations
+    diff = absoluteDifference(p2);
     cout << "\nNumber of iterations: " << counter;
     cout << "\nThe root of the equation is: " << p2;
+    cout << "\nThe absolute difference from the solution: "<<diff;
 }
 
 // Implement the false position method
 void falsePosition(double a, double b, int maxIterations)
 {
-    double p, f1, f2, f3;
+    double p, f1, f2, f3, diff;
     int i = 0;
 
     // Calculate function values at the interval
@@ -254,7 +262,9 @@ void falsePosition(double a, double b, int maxIterations)
         }
     }
     // Output the result after reaching the maximum number of iterations
+    diff = absoluteDifference(p);
     cout << "\nNumber of iterations: " << i;
     cout << "\nThe root of the equation is: " << p;
+    cout << "\nThe absolute difference from the solution: "<<diff;
 }
 
