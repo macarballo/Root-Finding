@@ -40,8 +40,7 @@ int main()
             cout << "\nEnter a valid choice: ";
         }
 
-        switch (menuChoice)
-        {
+        switch (menuChoice) {
         case 'a':
             cout << "\nYou chose Bisection Method!\n";
 
@@ -102,8 +101,7 @@ int main()
 }
 
 // Display the main menu
-void mainMenu()
-{
+void mainMenu() {
     cout << "\n--------------------++--------------------";
     cout << "\nChoose which root finding method to use.\n";
     cout << "   [a] Bisection Method\n";
@@ -113,18 +111,16 @@ void mainMenu()
 }
 
 // Define the test function
-double testFunction(double x)
-{
-    // return pow(x,2)-1;
+double testFunction(double x) {
     return x - cos(x);
 }
 
-double absoluteDifference(double x){
+double absoluteDifference(double x) {
     return abs(0.73908513321516-x);
 }
+
 // Implement the Bisection method
-void bisection(double a, double b, int maxIterations)
-{
+void bisection(double a, double b, int maxIterations) {
     int counter = 0;
     double mid, p, f1, f2, f3, diff;
 
@@ -135,31 +131,25 @@ void bisection(double a, double b, int maxIterations)
     //perform iterations of the bisection method
     while (counter < maxIterations)
     {
-        if ((f2 - f1) == 0)
-        {
+        if ((f2 - f1) == 0) {
             cout << "\nCannot proceed. Division by zero. Exiting...\n";
             return;
-        }
-        else
-        {   
+        } else {   
             //calculate the midpoint 
             //to find the next approximation
             mid = (a + b) / 2;
             p = mid;
-            cout << "\nIteration :" << counter << " Approx: " << p;
+            cout << "\nIteration: " << counter << " Approx: " << p;
             counter++;
 
             //calculate the function at new approximation
             f3 = testFunction(p);
 
             //update intervals
-            if ((f3 * f1) > 0)
-            {
+            if ((f3 * f1) > 0) {
                 a = p; 
                 f1 = f3; //updating their respective function values
-            }
-            else
-            {
+            } else {
                 b = p;
                 f2 = f3;
             }
@@ -174,8 +164,7 @@ void bisection(double a, double b, int maxIterations)
 }
 
 // Implement the secant method
-void secant(double p0, double p1, int maxIterations)
-{
+void secant(double p0, double p1, int maxIterations) {
     int counter = 0;
     double p2, f1, f0, f2, diff;
 
@@ -185,13 +174,10 @@ void secant(double p0, double p1, int maxIterations)
 
     while (counter < maxIterations)
     {
-        if ((f1 - f0) == 0)
-        {
+        if ((f1 - f0) == 0) {
             cout << "\nCannot proceed. Division by zero. Exiting...\n";
             return;
-        }
-        else
-        {
+        } else {
             //the equation to find the next approximation of the secant method
             p2 = p1 - ((f1 * (p1 - p0)) / (f1 - f0));
             f2 = testFunction(p2);
@@ -208,7 +194,6 @@ void secant(double p0, double p1, int maxIterations)
             cout << "\nNew Interval is [" << p0 << ", " << p1 << "]\n";
         }
     }
-
     //output the results after reaching the maximum number of iterations
     diff = absoluteDifference(p2);
     cout << "\nNumber of iterations: " << counter;
@@ -217,8 +202,7 @@ void secant(double p0, double p1, int maxIterations)
 }
 
 // Implement the false position method
-void falsePosition(double a, double b, int maxIterations)
-{
+void falsePosition(double a, double b, int maxIterations) {
     double p, f1, f2, f3, diff;
     int i = 0;
 
@@ -227,15 +211,11 @@ void falsePosition(double a, double b, int maxIterations)
     f2 = testFunction(b); // f(b)
 
     // Perform iterations of the false position method
-    while (i < maxIterations)
-    {
-        if (f2 - f1 == 0)
-        {
+    while (i < maxIterations) {
+        if (f2 - f1 == 0) {
             cout << "\nCannot proceed. Division by zero. Exiting...\n";
             return;
-        }
-        else
-        {
+        } else {
             // Calculate new approximation
             // Equation to find next approximation
             // p2 = a1 - ((f(a)*(b-a))/(f(b)-f(a)))
@@ -248,13 +228,10 @@ void falsePosition(double a, double b, int maxIterations)
             i++;
 
             // Update interval based on the sign of the function value
-            if ((f1 * f3) < 0)
-            {
+            if ((f1 * f3) < 0) {
                 b = p;
                 f2 = f3; // Update f(b) to f(p)
-            }
-            else
-            {
+            } else {
                 a = p;
                 f1 = f3; // Update f(a) to f(p)
             }
@@ -267,4 +244,3 @@ void falsePosition(double a, double b, int maxIterations)
     cout << "\nThe root of the equation is: " << p;
     cout << "\nThe absolute difference from the solution: "<<diff;
 }
-
