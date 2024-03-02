@@ -7,7 +7,6 @@ using namespace std;
 // function prototypes
 void mainMenu();
 double testFunction(double x);
-double absoluteDifference(double x);
 void falsePosition(double leftInterval, double rightInterval, int iterationNum);
 void bisection(double leftInterval, double rightInterval, int iterationNum);
 void secant(double leftInterval, double rightInterval, int iterationNum);
@@ -40,7 +39,8 @@ int main()
             cout << "\nEnter a valid choice: ";
         }
 
-        switch (menuChoice) {
+        switch (menuChoice)
+        {
         case 'a':
             cout << "\nYou chose Bisection Method!\n";
 
@@ -101,7 +101,8 @@ int main()
 }
 
 // Display the main menu
-void mainMenu() {
+void mainMenu()
+{
     cout << "\n--------------------++--------------------";
     cout << "\nChoose which root finding method to use.\n";
     cout << "   [a] Bisection Method\n";
@@ -111,99 +112,112 @@ void mainMenu() {
 }
 
 // Define the test function
-double testFunction(double x) {
-    return x - cos(x);
-}
-
-double absoluteDifference(double x) {
-    return abs(0.73908513321516-x);
+double testFunction(double x)
+{
+    // return pow(x,2)-1;
+     return x - cos(x);
+    //return (pow(x, 3) - (9 * (pow(x, 2))) + 3.8197);
+    // return ((pow(x, 2))-(4*x)+4);
+    // return ((pow(x,3))-(0.165*(pow(x,2)))+(3.993*(pow(10, -4))));
+    // return ((pow(x,3))-x-11);
+    // return (pow(x,3)-5*(pow(x,2))+7*x-3);
+    // return (pow(x,10)-1);
 }
 
 // Implement the Bisection method
-void bisection(double a, double b, int maxIterations) {
+void bisection(double a, double b, int maxIterations)
+{
     int counter = 0;
-    double mid, p, f1, f2, f3, diff;
+    double mid, p, f1, f2, f3;
 
-    //calculate function values at the interval
-    f1 = testFunction(a); //f(a)
-    f2 = testFunction(b); //f(b)
+    // calculate function values at the interval
+    f1 = testFunction(a); // f(a)
+    f2 = testFunction(b); // f(b)
 
-    //perform iterations of the bisection method
+    // perform iterations of the bisection method
     while (counter < maxIterations)
     {
-        if ((f2 - f1) == 0) {
+        if ((f2 - f1) == 0)
+        {
             cout << "\nCannot proceed. Division by zero. Exiting...\n";
             return;
-        } else {   
-            //calculate the midpoint 
-            //to find the next approximation
+        }
+        else
+        {
+            // calculate the midpoint
+            // to find the next approximation
             mid = (a + b) / 2;
             p = mid;
-            cout << "\nIteration: " << counter << " Approx: " << p;
+            cout << "\nIteration :" << counter << " Approx: " << p;
             counter++;
 
-            //calculate the function at new approximation
+            // calculate the function at new approximation
             f3 = testFunction(p);
 
-            //update intervals
-            if ((f3 * f1) > 0) {
-                a = p; 
-                f1 = f3; //updating their respective function values
-            } else {
+            // update intervals
+            if ((f3 * f1) > 0)
+            {
+                a = p;
+                f1 = f3; // updating their respective function values
+            }
+            else
+            {
                 b = p;
                 f2 = f3;
             }
             cout << "\nNew Interval is [" << a << "," << b << "]\n";
         }
-    } 
-    diff = absoluteDifference(p);
-    //output results upon reaching max iterations
+    }
+    // output results upon reaching max iterations
     cout << "\nNumber of iterations: " << counter;
     cout << "\nThe root of the equation is: " << p;
-    cout << "\nThe absolute difference from the solution: "<<diff;
 }
 
 // Implement the secant method
-void secant(double p0, double p1, int maxIterations) {
+void secant(double p0, double p1, int maxIterations)
+{
     int counter = 0;
-    double p2, f1, f0, f2, diff;
+    double p2, f1, f0, f2;
 
-    //getting the function values of p0 and p1
+    // getting the function values of p0 and p1
     f1 = testFunction(p1);
     f0 = testFunction(p0);
 
     while (counter < maxIterations)
     {
-        if ((f1 - f0) == 0) {
+        if ((f1 - f0) == 0)
+        {
             cout << "\nCannot proceed. Division by zero. Exiting...\n";
             return;
-        } else {
-            //the equation to find the next approximation of the secant method
+        }
+        else
+        {
+            // the equation to find the next approximation of the secant method
             p2 = p1 - ((f1 * (p1 - p0)) / (f1 - f0));
             f2 = testFunction(p2);
             cout << "\nIteration : " << counter << " Approx: " << p2;
             counter++;
 
-            //updating the values as well as function values of each variable
+            // updating the values as well as function values of each variable
             p0 = p1;
             f0 = f1;
             p1 = p2;
             f1 = f2;
-            
-            //output the new interval after every iteration
+
+            // output the new interval after every iteration
             cout << "\nNew Interval is [" << p0 << ", " << p1 << "]\n";
         }
     }
-    //output the results after reaching the maximum number of iterations
-    diff = absoluteDifference(p2);
+
+    // output the results after reaching the maximum number of iterations
     cout << "\nNumber of iterations: " << counter;
     cout << "\nThe root of the equation is: " << p2;
-    cout << "\nThe absolute difference from the solution: "<<diff;
 }
 
 // Implement the false position method
-void falsePosition(double a, double b, int maxIterations) {
-    double p, f1, f2, f3, diff;
+void falsePosition(double a, double b, int maxIterations)
+{
+    double p, f1, f2, f3, xold, errortest;
     int i = 0;
 
     // Calculate function values at the interval
@@ -211,36 +225,89 @@ void falsePosition(double a, double b, int maxIterations) {
     f2 = testFunction(b); // f(b)
 
     // Perform iterations of the false position method
-    while (i < maxIterations) {
-        if (f2 - f1 == 0) {
+    while (i < maxIterations)
+    {
+        if (f2 - f1 == 0)
+        {
             cout << "\nCannot proceed. Division by zero. Exiting...\n";
             return;
-        } else {
+        }
+        else
+        {
             // Calculate new approximation
             // Equation to find next approximation
             // p2 = a1 - ((f(a)*(b-a))/(f(b)-f(a)))
+            /*
+            cout << "\nx = (a * f(a) - b * f(a)) / (f(b) - f(a))";
+            cout << "\nx = ((" << a << " * " << f1 << ") - (" << b << " * " << f2 << ")) / (" << f2 << " - " << f1 << ")";
+            cout << "\nx = ((" << a * f1 << ") - (" << b * f2 << ")) / (" << f2 - f1 << ")";
+            cout << "\nx = (" << (a * f1) - (b * f2) << ") / (" << f2 - f1 << ")";
             p = a - ((f1 * (b - a)) / (f2 - f1));
+            */
+            // cout << "\nx = a - ((f1 * (b-a)))";
+            cout << "\n----------------------------------\n";
+            cout << "\na = " << a << ", f(a) = (" << a << ")^3 - 9(" << a << ")^2 + 3.8197";
+            cout << "\na = " << a << ", f(a) = " << pow(a, 3) << " - 9(" << pow(a, 2) << ") + 3.8197";
+            cout << "\na = " << a << ", f(a) = " << pow(a, 3) << " - " << 9 * (pow(a, 2)) << " + 3.8197";
+            cout << "\na = " << a << ", f(a) = " << f1 << "\n";
 
-            cout << "\nIteration: " << i << " Approx: " << p;
+            cout << "\nb = " << b << ", f(b) = (" << b << ")^3-9(" << b << ")^2 + 3.8197";
+            cout << "\nb = " << b << ", f(b) = " << pow(b, 3) << " - 9(" << pow(b, 2) << ") + 3.8197";
+            cout << "\nb = " << b << ", f(b) = " << pow(b, 3) << " - " << 9 * (pow(b, 2)) << " + 3.8197";
+            cout << "\nb = " << b << ", f(b) = " << f2 << "\n";
+
+            cout << "\n\nx = a - ((f1 * (b-a)) / (f2 - f1))";
+            cout << "\nx = " << a << " - ((" << f1 << " * (" << b << "-" << a << ")) / (" << f2 << " - " << f1 << "))";
+            cout << "\nx = " << a << " - ((" << f1 << " * (" << b - a << ")) / (" << f2 - f1 << "))";
+            // cout << "\nx = " << a << " - ((" << f1 << " * (" << b - a << ")) / (" << f2 - f1 << "))";
+            cout << "\nx = " << a << " - " << (f1 * (b - a)) << " / (" << f2 - f1 << ")";
+            cout << "\nx = " << a << " - " << (f1 * (b - a)) / (f2 - f1);
+            p = a - ((f1 * (b - a)) / (f2 - f1));
+            // p = ((a * f1) - (b * f2)) / (f2 - f1);
+            cout << "\nx = " << p << "\n";
+
+            cout << "\nIteration: " << i + 1 << " Approx: " << p;
+
+            if (i > 0)
+            {
+                errortest = (abs((p - xold) / (p))) * 100;
+                cout << "\n\nError = |((x(new) - x(old)) / ( x(new)))| * 100";
+                cout << "\nError = |((" << p << " - " << xold << ") / (" << p << "))| * 100";
+                cout << "\nError = |((" << p - xold << ") / (" << p << "))| * 100";
+                cout << "\nError = |(" << (p - xold) / (p) << ")| * 100";
+                cout << "\nError = " << errortest;
+            }
+            else if (i == 0)
+            {
+                errortest = ((p - b) / (p)) * 100;
+                cout << "\n\nError = |((x(new) - x(old)) / ( x(new)))| * 100";
+                cout << "\nError = |((" << p << " - " << b << ") / (" << p << "))| * 100";
+                cout << "\nError = |((" << p - b << ") / (" << p << "))| * 100";
+                cout << "\nError = |(" << (p - b) / (p) << ")| * 100";
+                cout << "\nError = " << errortest;
+            }
 
             // Calculate function value at the new approximation
             f3 = testFunction(p);
             i++;
 
             // Update interval based on the sign of the function value
-            if ((f1 * f3) < 0) {
+            if ((f1 * f3) < 0)
+            {
                 b = p;
                 f2 = f3; // Update f(b) to f(p)
-            } else {
+            }
+            else
+            {
                 a = p;
                 f1 = f3; // Update f(a) to f(p)
             }
-            cout << "\nNew interval is [" << b << ", " << a << "]\n";
+            xold = p;
+            cout << "\n\nNew interval is [" << b << ", " << a << "], f(x)=" << f3 << ", error = " << errortest << "\n";
         }
     }
     // Output the result after reaching the maximum number of iterations
-    diff = absoluteDifference(p);
+    cout << "\n----------------------------------\n";
     cout << "\nNumber of iterations: " << i;
     cout << "\nThe root of the equation is: " << p;
-    cout << "\nThe absolute difference from the solution: "<<diff;
 }
