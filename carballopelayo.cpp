@@ -235,7 +235,7 @@ void falsePosition(double a, double b, int maxIterations) {
                 a = p;
                 f1 = f3; // Update f(a) to f(p)
             }
-            cout << "\nNew interval is [" << b << ", " << a << "]\n";
+            cout << "\nNew interval is [" << a << ", " << b << "]\n";
         }
     }
     // Output the result after reaching the maximum number of iterations
