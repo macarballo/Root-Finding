@@ -304,6 +304,7 @@ void falsePosition(double a, double b, int maxIterations)
             }
             xold = p;
             cout << "\n\nNew interval is [" << b << ", " << a << "], f(x)=" << f3 << ", error = " << errortest << "\n";
+            cout << "\nNew interval is [" << a << ", " << b << "]\n";
         }
     }
     // Output the result after reaching the maximum number of iterations
